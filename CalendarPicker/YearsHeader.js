@@ -3,10 +3,13 @@ import {
   View,
   Text,
   Platform,
+  TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { stylePropType } from './localPropTypes';
 import Controls from './Controls';
+import Icon from "react-native-vector-icons/FontAwesome5";
+
 
 export default function YearsHeader(props) {
   const {
@@ -37,28 +40,54 @@ export default function YearsHeader(props) {
   }
 
   return (
-    <View style={styles.headerWrapper}>
-      <Controls
-        disabled={disablePrevious}
-        label={previousTitle}
-        component={previousComponent}
-        onPressControl={onYearViewPrevious}
-        styles={styles.previousContainer}
-        textStyles={[styles.navButtonText, textStyle, previousTitleStyle]}
-      />
-      <Text style={[styles.yearsHeaderText, textStyle]} {...accessibilityProps}>
+    <View style={[{
+      flexDirection : 'row',
+      paddingBottom : 10,
+      borderBottomColor : 'white',
+      borderBottomWidth : 0.5
+    }]}>
+      <TouchableOpacity style = {{
+        width : 50,
+        height : 40,
+        marginLeft : 10,
+        justifyContent : 'center',
+      }}
+      onPress = {onYearViewPrevious}>
+        <Icon size = {25}
+        name  = {"chevron-left"}
+        style = {{
+          fontStyle : 'italic'
+        }}
+        color = {'white'}/>
+      </TouchableOpacity>
+      <View style={[styles.monthYearHeaderWrapper,{
+        flex : 1
+      }]}>
+        <Text style={[styles.yearsHeaderText,{
+          fontSize : 18,
+          color : 'white'
+        }]} {...accessibilityProps}>
         { title }
-      </Text>
-      <Controls
-        disabled={disableNext}
-        label={nextTitle}
-        component={nextComponent}
-        onPressControl={onYearViewNext}
-        styles={styles.nextContainer}
-        textStyles={[styles.navButtonText, textStyle, nextTitleStyle]}
-      />
+        </Text>
+      </View>
+      <TouchableOpacity style = {{
+        width : 50,
+        height : 40,
+        alignItems : 'flex-end',
+        justifyContent : 'center',
+        marginRight : 10,
+      }}
+      onPress = {onYearViewNext}>
+        <Icon size = {25}
+        name  = {"chevron-right"}
+        style = {{
+          fontStyle : 'italic'
+        }}
+        color = {'white'}/>
+      </TouchableOpacity>
     </View>
-  );
+  )
+
 }
 
 YearsHeader.propTypes = {
